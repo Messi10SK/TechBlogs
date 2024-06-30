@@ -58,7 +58,7 @@ export default function CreatePost() {
       console.log(error);
     }
   };
-
+// console.log(formData)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +70,9 @@ export default function CreatePost() {
         },
         body: JSON.stringify(formData),
       });
+    
       const data = await res.json();
+      // console.log(data)
       if (!res.ok) {
         setPublishError(data.message);
         return;
@@ -86,8 +88,9 @@ export default function CreatePost() {
   };
 
     return (
-      <div className='p-3 max-w-3xl mx-auto min-h-screen'>
-        <h1 className='text-center text-3xl my-7 font-semibold'>Create a post</h1>
+      <div className='bg-yellow'>
+ <div className='p-3 max-w-3xl mx-auto min-h-screen bg-black rounded-2xl '>
+        <h1 className='text-center text-3xl my-7 font-head font-semibold'>Create a post and publish it</h1>
         <form className='flex flex-col gap-4' onSubmit={handleSubmit}>
           <div className='flex flex-col gap-4 sm:flex-row justify-between'>
             <TextInput
@@ -109,7 +112,7 @@ export default function CreatePost() {
               <option value='nextjs'>Next.js</option>
             </Select>
           </div>
-          <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3'>
+          <div className='flex gap-4 items-center justify-between   p-3'>
             <FileInput type='file' accept='image/*' onChange={(e) => setFile(e.target.files[0])} />
             <Button
               type='button'
@@ -144,13 +147,13 @@ export default function CreatePost() {
           <ReactQuill
             theme='snow'
             placeholder='Write something...'
-            className='h-72 mb-12'
+            className='h-72 mb-12 text-gray-200'
             required
             onChange={(value) => {
               setFormData({ ...formData, content: value });
             }}
           />
-          <Button type='submit' gradientDuoTone='purpleToPink'>
+          <Button type='submit'>
             Publish
           </Button>
           {publishError && (
@@ -160,5 +163,7 @@ export default function CreatePost() {
         )}
         </form>
       </div>
+      </div>
+     
     );
   }

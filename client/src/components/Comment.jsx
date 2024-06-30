@@ -3,16 +3,13 @@ import { useEffect, useState } from 'react';
 import { FaThumbsUp } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 import { Button, Textarea } from 'flowbite-react';
-import { set } from 'mongoose';
 
-export default function Comment({ comment , onLike , onEdit ,onDelete }) {
+
+export default function Comment({ comment, onLike, onEdit, onDelete }) {
   const [user, setUser] = useState({});
-  const { currentUser } = useSelector((state) => state.user);
-
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(comment.content);
-
-
+  const { currentUser } = useSelector((state) => state.user);
   useEffect(() => {
     const getUser = async () => {
       try {
@@ -28,19 +25,6 @@ export default function Comment({ comment , onLike , onEdit ,onDelete }) {
     getUser();
   }, [comment]);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
   const handleEdit = () => {
     setIsEditing(true);
     setEditedContent(comment.content);
@@ -48,7 +32,7 @@ export default function Comment({ comment , onLike , onEdit ,onDelete }) {
 
   const handleSave = async () => {
     try {
-      const res  = await fetch(`/api/comment/editComment/${comment._id}`, {
+      const res = await fetch(`/api/comment/editComment/${comment._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -64,13 +48,7 @@ export default function Comment({ comment , onLike , onEdit ,onDelete }) {
     } catch (error) {
       console.log(error.message);
     }
-
   };
-
-
-
-
-
   return (
     <div className='flex p-4 border-b dark:border-gray-600 text-sm'>
       <div className='flex-shrink-0 mr-3'>
@@ -91,7 +69,7 @@ export default function Comment({ comment , onLike , onEdit ,onDelete }) {
         </div>
         {isEditing ? (
           <>
-          <Textarea
+            <Textarea
               className='mb-2'
               value={editedContent}
               onChange={(e) => setEditedContent(e.target.value)}
@@ -139,7 +117,7 @@ export default function Comment({ comment , onLike , onEdit ,onDelete }) {
               </p>
               {currentUser &&
                 (currentUser._id === comment.userId || currentUser.isAdmin) && (
-                    <>
+                  <>
                     <button
                       type='button'
                       onClick={handleEdit}

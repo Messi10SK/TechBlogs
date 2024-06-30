@@ -1,87 +1,61 @@
-import React, { useState } from 'react'
-import { Button, Label, TextInput,Alert, Spinner } from 'flowbite-react';
-import { Link ,useNavigate} from 'react-router-dom';
+import React, { useState } from 'react';
+import { Button, Label, TextInput, Alert, Spinner } from 'flowbite-react';
+import { Link, useNavigate } from 'react-router-dom';
 import OAuth from '../components/OAuth';
+ // Import your image here
 
 export default function SignUp() {
+  const [formData, setFormData] = useState({});
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value.trim() });
+  };
 
- const[formData,setFormData] = useState({});
- const[errorMessage,setErrorMessage] = useState(null);
- const[loading,setLoading] = useState(false);
- const navigate = useNavigate();
-//It returns a navigate function that you can use to programmatically navigate to different pages within your application.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.username || !formData.email || !formData.password) {
+      return setErrorMessage('Please fill out all fields.');
+    }
 
-const handleChange = (e)=>{
-  setFormData({...formData,[e.target.id]:e.target.value.trim()})
-}
-
-const handleSubmit = async (e)=>{
-  e.preventDefault();
-  if (!formData.username || !formData.email || !formData.password) {
-    return setErrorMessage('Please fill out all fields.');
-  }
-
-  try {
-    setLoading(true);
-    setErrorMessage(null);
-    const res = await fetch('/api/auth/signup', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData),
-    });
-  const data = await res.json();
-  if (data.success === false) {
-    return setErrorMessage(data.message);
-  }
-  setLoading(false);
-  if(res.ok) {
-    navigate('/sign-in');
-  }
-  
-} catch (error) {
-  setErrorMessage(error.message);
+    try {
+      setLoading(true);
+      setErrorMessage(null);
+      const res = await fetch('/api/auth/signup', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        return setErrorMessage(data.message);
+      }
       setLoading(false);
-}
-
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+      if (res.ok) {
+        navigate('/sign-in');
+      }
+    } catch (error) {
+      setErrorMessage(error.message);
+      setLoading(false);
+    }
+  };
 
   return (
-    <div className='min-h-screen mt-20'>
+    <div
+      className='min-h-screen p-10 bg-yellow'
+      style={{
+        backgroundImage: `url(https://wallpapers.com/images/featured/dark-5u7v1sbwoi6hdzsb.jpg)`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       <div className='flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5'>
-         {/* left */}
+        {/* left */}
         <div className='flex-1'>
           <Link to="/" className='font-bold dark:text-white text-4xl'>
-           <span className='px-2 py-1  bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>Satyam's</span>
+           <span className='px-2 py-1   rounded-lg text-white'>Satyam's</span>
            TechBlogs          
           </Link>
           <p className='text-sm mt-5'>
@@ -105,7 +79,7 @@ const handleSubmit = async (e)=>{
               <TextInput type='password' placeholder='Password' id='password'   onChange={handleChange} />
             </div>
             <Button
-              gradientDuoTone='purpleToPink'
+              
               type='submit'
               disabled={loading}
             >

@@ -61,12 +61,21 @@ const handleChange = (e) => {
 
 
   return (
-    <div className='min-h-screen mt-20'>
+
+    <div
+    className='min-h-screen p-10 bg-yellow'
+    style={{
+      backgroundImage: `url(https://wallpapers.com/images/featured/dark-5u7v1sbwoi6hdzsb.jpg)`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
+    }}
+  >
+    <div className='min-h-screen p-10'>
     <div className='flex p-3 max-w-3xl mx-auto flex-col md:flex-row md:items-center gap-5'>
       {/* left */}
       <div className='flex-1'>
         <Link to='/' className='font-bold dark:text-white text-4xl'>
-          <span className='px-2 py-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white'>
+          <span className='px-2 py-1  rounded-lg text-white'>
             Satyam's
           </span>
           TechBlogs
@@ -99,7 +108,7 @@ const handleChange = (e) => {
             />
           </div>
           <Button
-            gradientDuoTone='purpleToPink'
+     
             type='submit'
             disabled={loading}
           >
@@ -127,6 +136,7 @@ const handleChange = (e) => {
         )}
       </div>
     </div>
+  </div>
   </div>
   )
 }

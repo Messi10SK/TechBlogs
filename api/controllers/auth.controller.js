@@ -28,6 +28,8 @@ export const signup = async(req,res,next) =>{
         password: hashedPassword,
       });
 
+      console.log(newUser)
+
 
       try{
         await newUser.save();
@@ -62,6 +64,7 @@ if (!validPassword) {
 const token = jwt.sign(
 {id:validUser._id,isAdmin: validUser.isAdmin},
 process.env.JWT_SECRET);
+
 
 const{password : pass,...rest} = validUser._doc;
 res.status(200)
